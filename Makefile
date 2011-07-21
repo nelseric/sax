@@ -3,11 +3,11 @@ CFLAGS=-Wall -ggdb -std=c99
 LDLIBS=-lreadline
 LDFLAGS=
 
-SOURCES=main.c htoi.c
+SOURCES=main.c sax.c
 
 OBJECTS=$(SOURCES:.c=.o)
 
-TARGET=htoi
+TARGET=sax
 
 
 .PHONY : clean run
