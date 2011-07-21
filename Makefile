@@ -7,7 +7,7 @@ SOURCES=main.c sax.c
 
 OBJECTS=$(SOURCES:.c=.o)
 
-TARGET=sax
+TARGET=ppxml
 
 
 .PHONY : clean run
@@ -20,8 +20,15 @@ $(TARGET): $(OBJECTS)
 %.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
+.depend: depend
+
+depend: $(SOURCES)
+	rm -f ./.depend
+	$(CC) $(CFLAGS) -MM $^>>./.depend;
+include .depend
+
 run: all
-	./$(TARGET) 
+	./$(TARGET) < test.xml
 clean:
-	rm $(OBJECTS) $(TARGET)
+	rm $(OBJECTS) $(TARGET) 
 
