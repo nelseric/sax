@@ -4,7 +4,6 @@
 #include "sax.h"
 
 int tabs = 0;
-
 int main(int argc, char **argv) {
 	SAX_parser *p;
 	p = SAX_init(stdin);
@@ -29,16 +28,21 @@ void end() {
 	puts("end");
 }
 
-void chars(char * chars){
+void chars(char * chars) {
+	fpns(stdin, tabs, "  ");
 
 }
 
-void start_elem(char * name, attr_array *attrs);
+void start_elem(char * name, attr_array *attrs) {
+	fpns(stdin, tabs, "  ");
+}
 
-void end_elem(char *name);
+void end_elem(char *name) {
+	fpns(stdin, tabs, "  ");
+}
 
 void proc_inst(char *name, char *data) {
-	fpns()
+	fpns(stdout, tabs, "  ");
 	printf("<?%s %s >\n", name, data);
 }
 
@@ -47,8 +51,8 @@ void error(int errnum) {
 }
 
 // file print n number of string s
-void fpns(FILE f, int n, char * s){
-	for(int i = 0; i < n; i ++){
+void fpns(FILE *f, int n, char * s) {
+	for (int i = 0; i < n; i++) {
 		fprintf(f, "%s", s);
 	}
 }

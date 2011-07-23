@@ -10,6 +10,6 @@ void end_elem(char *name);
 void proc_inst(char *name, char *data);
 void error(int errnum);
 
-void fpns(FILE *f,int n, char *s);
+void fpns(FILE *f, int n, char *s);
 
 #endif
