@@ -4,22 +4,72 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ASM_SRCS	Debug/sources.mk	/^ASM_SRCS := $/;"	m
 CC	Makefile	/^CC=gcc$/;"	m
 CFLAGS	Makefile	/^CFLAGS=-Wall -ggdb -std=c99$/;"	m
+CHARACTERS	sax.h	/^	CHARACTERS,$/;"	e	enum:eventtype
+C_DEPS	Debug/sources.mk	/^C_DEPS := $/;"	m
+C_SRCS	Debug/sources.mk	/^C_SRCS := $/;"	m
+END_DOCUMENT	sax.h	/^	END_DOCUMENT,$/;"	e	enum:eventtype
+END_ELEMENT	sax.h	/^	END_ELEMENT,$/;"	e	enum:eventtype
+ERROR	sax.h	/^	ERROR$/;"	e	enum:eventtype
+EXECUTABLES	Debug/sources.mk	/^EXECUTABLES := $/;"	m
 LDFLAGS	Makefile	/^LDFLAGS=$/;"	m
 LDLIBS	Makefile	/^LDLIBS=-lreadline$/;"	m
+LIBS	Debug/objects.mk	/^LIBS := -lreadline$/;"	m
 OBJECTS	Makefile	/^OBJECTS=$(SOURCES:.c=.o)$/;"	m
-SAX_init	sax.c	/^SAX_parser * SAX_init(FILE * source){$/;"	f
-SAX_parser	sax.h	/^} SAX_parser;$/;"	t	typeref:struct:__anon3
+OBJS	Debug/sources.mk	/^OBJS := $/;"	m
+OBJ_SRCS	Debug/sources.mk	/^OBJ_SRCS := $/;"	m
+O_SRCS	Debug/sources.mk	/^O_SRCS := $/;"	m
+PROCESS_INSTRUCTION	sax.h	/^	PROCESS_INSTRUCTION,$/;"	e	enum:eventtype
+RM	Debug/makefile	/^RM := rm -rf$/;"	m
+SAX_init	sax.c	/^SAX_parser * SAX_init(FILE * source) {$/;"	f
+SAX_parser	sax.h	/^} SAX_parser;$/;"	t	typeref:struct:__anon6
 SOURCES	Makefile	/^SOURCES=main.c sax.c$/;"	m
-TARGET	Makefile	/^TARGET=yaketysax$/;"	m
+START_DOCUMENT	sax.h	/^	START_DOCUMENT,$/;"	e	enum:eventtype
+START_ELEMENT	sax.h	/^	START_ELEMENT,$/;"	e	enum:eventtype
+SUBDIRS	Debug/sources.mk	/^SUBDIRS := \\$/;"	m
+S_UPPER_SRCS	Debug/sources.mk	/^S_UPPER_SRCS := $/;"	m
+TARGET	Makefile	/^TARGET=ppxml$/;"	m
+USER_OBJS	Debug/objects.mk	/^USER_OBJS :=$/;"	m
 __SAX_H__	sax.h	2;"	d
 attr_array	sax.h	/^} attr_array;$/;"	t	typeref:struct:__anon2
 attribute	sax.h	/^} attribute;$/;"	t	typeref:struct:__anon1
-attrs	sax.h	/^    attribute *attrs;$/;"	m	struct:__anon2
-cap	sax.h	/^    int cap;$/;"	m	struct:__anon2
+attrs	sax.h	/^	attribute *attrs;$/;"	m	struct:__anon2
+cap	sax.h	/^	int cap;$/;"	m	struct:__anon2
+cap	sax.h	/^	int cap;$/;"	m	struct:__anon5
+characters_caller	sax.c	/^void characters_caller(SAX_parser *p, char * chars){$/;"	f
+characters_handler	sax.h	/^		void (* characters_handler)(char * chars);$/;"	m	union:__anon3::__anon4
+end_document_caller	sax.c	/^void end_document_caller(SAX_parser *p){$/;"	f
+end_document_handler	sax.h	/^		void (* end_document_handler)();$/;"	m	union:__anon3::__anon4
+end_element_caller	sax.c	/^void end_element_caller(SAX_parser *p, char * name){$/;"	f
+end_element_handler	sax.h	/^		void (* end_element_handler)(char * name);$/;"	m	union:__anon3::__anon4
+error_caller	sax.c	/^void error_caller(SAX_parser *p, int errnum){$/;"	f
+error_handler	sax.h	/^		void (* error_handler)(int errnum);$/;"	m	union:__anon3::__anon4
+eventtype	sax.h	/^enum eventtype {$/;"	g
+func	sax.h	/^	} func;$/;"	m	struct:__anon3	typeref:union:__anon3::__anon4
+h_list	sax.h	/^	handler_list h_list;$/;"	m	struct:__anon6
+handler	sax.h	/^} handler;$/;"	t	typeref:struct:__anon3
+handler_list	sax.h	/^} handler_list;$/;"	t	typeref:struct:__anon5
+handlers	sax.h	/^	handler **handlers;$/;"	m	struct:__anon5
 main	main.c	/^int main(int argc, char **argv) {$/;"	f
-name	sax.h	/^    char * name;$/;"	m	struct:__anon1
-size	sax.h	/^    int size;$/;"	m	struct:__anon2
-source	sax.h	/^    FILE * source;$/;"	m	struct:__anon3
-value	sax.h	/^    char * value;$/;"	m	struct:__anon1
+name	sax.h	/^	char * name;$/;"	m	struct:__anon1
+pi_caller	sax.c	/^void pi_caller(SAX_parser *p, char * name, char * data){$/;"	f
+process_instruction_handler	sax.h	/^		void (* process_instruction_handler)(char *name, char *data);$/;"	m	union:__anon3::__anon4
+reg_characters_handler	sax.c	/^int reg_characters_handler(SAX_parser *p, void event_handler(char * chars)) {$/;"	f
+reg_end_document_handler	sax.c	/^int reg_end_document_handler(SAX_parser *p, void event_handler()) {$/;"	f
+reg_end_element_handler	sax.c	/^int reg_end_element_handler(SAX_parser *p, void event_handler(char *name)) {$/;"	f
+reg_error_handler	sax.c	/^int reg_error_handler(SAX_parser *p, void event_handler(int errnum)) {$/;"	f
+reg_pi_handler	sax.c	/^int reg_pi_handler(SAX_parser *p, void event_handler(char * name, char * data)) {$/;"	f
+reg_start_document_handler	sax.c	/^int reg_start_document_handler(SAX_parser *p, void event_handler()) {$/;"	f
+reg_start_element_handler	sax.c	/^int reg_start_element_handler(SAX_parser *p, void event_handler(char * name,$/;"	f
+size	sax.h	/^	int size;$/;"	m	struct:__anon2
+size	sax.h	/^	int size;$/;"	m	struct:__anon5
+source	sax.h	/^	FILE * source;$/;"	m	struct:__anon6
+start_document_caller	sax.c	/^void start_document_caller(SAX_parser *p){$/;"	f
+start_document_handler	sax.h	/^		void (* start_document_handler)();$/;"	m	union:__anon3::__anon4
+start_element_caller	sax.c	/^void start_element_caller(SAX_parser *p, char *name, attr_array * attrs){$/;"	f
+start_element_handler	sax.h	/^		void (* start_element_handler)(char * name, attr_array *attrs);$/;"	m	union:__anon3::__anon4
+start_parse	sax.c	/^void start_parse(SAX_parser *p) {$/;"	f
+type	sax.h	/^	enum eventtype type;$/;"	m	struct:__anon3	typeref:enum:__anon3::eventtype
+value	sax.h	/^	char * value;$/;"	m	struct:__anon1

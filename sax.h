@@ -58,7 +58,7 @@ void characters_caller(SAX_parser *p, char *chars);
 int reg_start_document_handler(SAX_parser *p, void event_handler());
 void start_document_caller(SAX_parser *p);
 int reg_end_document_handler(SAX_parser *p, void event_handler());
-void start_document_caller(SAX_parser *p);
+void end_document_caller(SAX_parser *p);
 
 int reg_start_element_handler(SAX_parser *p, void evt(char * name,
 		attr_array *attrs));

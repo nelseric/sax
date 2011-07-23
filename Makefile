@@ -3,7 +3,7 @@ CFLAGS=-Wall -ggdb -std=c99
 LDLIBS=-lreadline
 LDFLAGS=
 
-SOURCES=main.c sax.c
+SOURCES=ppxml.c sax.c
 
 OBJECTS=$(SOURCES:.c=.o)
 

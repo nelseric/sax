@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <ctype.h>
 #include "sax.h"
 
 SAX_parser * SAX_init(FILE * source) {
@@ -12,13 +13,29 @@ SAX_parser * SAX_init(FILE * source) {
 }
 
 void start_parse(SAX_parser *p) {
-
+	char cur = fgetc(p->source);
+	start_document_caller(p);
+	while (cur != EOF) {
+		if( cur == '<'){
+			cur = fgetc(p->source);
+			if(cur == '?'){
+				// process instruction
+			} else if(cur == '/'){
+				//end tag
+			} else {
+				//open tag
+			}
+		}
+		cur = fgetc(p->source);
+	}
+	end_document_caller(p);
 }
 
 int reg_characters_handler(SAX_parser *p, void event_handler(char * chars)) {
 	if (p->h_list.size == p->h_list.cap) {
-		p->h_list.cap  = (p->h_list.cap * 3) / 2;
-		p->h_list.handlers = realloc(p->h_list.handlers, sizeof(handler) * p->h_list.size);
+		p->h_list.cap = (p->h_list.cap * 3) / 2;
+		p->h_list.handlers = realloc(p->h_list.handlers, sizeof(handler)
+				* p->h_list.size);
 	}
 	int s = p->h_list.size;
 	handler *new = malloc(sizeof(handler));
@@ -32,19 +49,20 @@ int reg_characters_handler(SAX_parser *p, void event_handler(char * chars)) {
 	return 0;
 }
 
-void characters_caller(SAX_parser *p, char * chars){
+void characters_caller(SAX_parser *p, char * chars) {
 	int i;
-	for(i = 0; i < p->h_list.size; i ++){
-		if(p->h_list.handlers[i]->type == CHARACTERS){
-			(* p->h_list.handlers[i]->func.characters_handler)(chars);
+	for (i = 0; i < p->h_list.size; i++) {
+		if (p->h_list.handlers[i]->type == CHARACTERS) {
+			(*p->h_list.handlers[i]->func.characters_handler)(chars);
 		}
 	}
 }
 
 int reg_start_document_handler(SAX_parser *p, void event_handler()) {
 	if (p->h_list.size == p->h_list.cap) {
-		p->h_list.cap  = (p->h_list.cap * 3) / 2;
-		p->h_list.handlers = realloc(p->h_list.handlers, sizeof(handler) * p->h_list.size);
+		p->h_list.cap = (p->h_list.cap * 3) / 2;
+		p->h_list.handlers = realloc(p->h_list.handlers, sizeof(handler)
+				* p->h_list.size);
 	}
 	int s = p->h_list.size;
 	handler *new = malloc(sizeof(handler));
@@ -58,10 +76,10 @@ int reg_start_document_handler(SAX_parser *p, void event_handler()) {
 	return 0;
 }
 
-void start_document_caller(SAX_parser *p){
+void start_document_caller(SAX_parser *p) {
 	int i;
-	for(i = 0; i < p->h_list.size; i ++){
-		if(p->h_list.handlers[i]->type == START_DOCUMENT){
+	for (i = 0; i < p->h_list.size; i++) {
+		if (p->h_list.handlers[i]->type == START_DOCUMENT) {
 			p->h_list.handlers[i]->func.start_document_handler();
 		}
 	}
@@ -69,8 +87,9 @@ void start_document_caller(SAX_parser *p){
 
 int reg_end_document_handler(SAX_parser *p, void event_handler()) {
 	if (p->h_list.size == p->h_list.cap) {
-		p->h_list.cap  = (p->h_list.cap * 3) / 2;
-		p->h_list.handlers = realloc(p->h_list.handlers, sizeof(handler) * p->h_list.size);
+		p->h_list.cap = (p->h_list.cap * 3) / 2;
+		p->h_list.handlers = realloc(p->h_list.handlers, sizeof(handler)
+				* p->h_list.size);
 	}
 	int s = p->h_list.size;
 	handler *new = malloc(sizeof(handler));
@@ -84,10 +103,10 @@ int reg_end_document_handler(SAX_parser *p, void event_handler()) {
 	return 0;
 }
 
-void end_document_caller(SAX_parser *p){
+void end_document_caller(SAX_parser *p) {
 	int i;
-	for(i = 0; i < p->h_list.size; i ++){
-		if(p->h_list.handlers[i]->type == END_DOCUMENT){
+	for (i = 0; i < p->h_list.size; i++) {
+		if (p->h_list.handlers[i]->type == END_DOCUMENT) {
 			p->h_list.handlers[i]->func.end_document_handler();
 		}
 	}
@@ -96,8 +115,9 @@ void end_document_caller(SAX_parser *p){
 int reg_start_element_handler(SAX_parser *p, void event_handler(char * name,
 		attr_array *attrs)) {
 	if (p->h_list.size == p->h_list.cap) {
-		p->h_list.cap  = (p->h_list.cap * 3) / 2;
-		p->h_list.handlers = realloc(p->h_list.handlers, sizeof(handler) * p->h_list.size);
+		p->h_list.cap = (p->h_list.cap * 3) / 2;
+		p->h_list.handlers = realloc(p->h_list.handlers, sizeof(handler)
+				* p->h_list.size);
 	}
 	int s = p->h_list.size;
 	handler *new = malloc(sizeof(handler));
@@ -111,10 +131,10 @@ int reg_start_element_handler(SAX_parser *p, void event_handler(char * name,
 	return 0;
 }
 
-void start_element_caller(SAX_parser *p, char *name, attr_array * attrs){
+void start_element_caller(SAX_parser *p, char *name, attr_array * attrs) {
 	int i;
-	for(i = 0; i < p->h_list.size; i ++){
-		if(p->h_list.handlers[i]->type == START_ELEMENT){
+	for (i = 0; i < p->h_list.size; i++) {
+		if (p->h_list.handlers[i]->type == START_ELEMENT) {
 			p->h_list.handlers[i]->func.start_document_handler(name, attrs);
 		}
 	}
@@ -122,8 +142,9 @@ void start_element_caller(SAX_parser *p, char *name, attr_array * attrs){
 
 int reg_end_element_handler(SAX_parser *p, void event_handler(char *name)) {
 	if (p->h_list.size == p->h_list.cap) {
-		p->h_list.cap  = (p->h_list.cap * 3) / 2;
-		p->h_list.handlers = realloc(p->h_list.handlers, sizeof(handler) * p->h_list.size);
+		p->h_list.cap = (p->h_list.cap * 3) / 2;
+		p->h_list.handlers = realloc(p->h_list.handlers, sizeof(handler)
+				* p->h_list.size);
 	}
 	int s = p->h_list.size;
 	handler *new = malloc(sizeof(handler));
@@ -136,10 +157,10 @@ int reg_end_element_handler(SAX_parser *p, void event_handler(char *name)) {
 	return 0;
 }
 
-void end_element_caller(SAX_parser *p, char * name){
+void end_element_caller(SAX_parser *p, char * name) {
 	int i;
-	for(i = 0; i < p->h_list.size; i ++){
-		if(p->h_list.handlers[i]->type == END_ELEMENT){
+	for (i = 0; i < p->h_list.size; i++) {
+		if (p->h_list.handlers[i]->type == END_ELEMENT) {
 			p->h_list.handlers[i]->func.end_element_handler(name);
 		}
 	}
@@ -147,8 +168,9 @@ void end_element_caller(SAX_parser *p, char * name){
 
 int reg_pi_handler(SAX_parser *p, void event_handler(char * name, char * data)) {
 	if (p->h_list.size == p->h_list.cap) {
-		p->h_list.cap  = (p->h_list.cap * 3) / 2;
-		p->h_list.handlers = realloc(p->h_list.handlers, sizeof(handler) * p->h_list.size);
+		p->h_list.cap = (p->h_list.cap * 3) / 2;
+		p->h_list.handlers = realloc(p->h_list.handlers, sizeof(handler)
+				* p->h_list.size);
 	}
 	int s = p->h_list.size;
 	handler *new = malloc(sizeof(handler));
@@ -162,10 +184,10 @@ int reg_pi_handler(SAX_parser *p, void event_handler(char * name, char * data)) 
 	return 0;
 }
 
-void pi_caller(SAX_parser *p, char * name, char * data){
+void pi_caller(SAX_parser *p, char * name, char * data) {
 	int i;
-	for(i = 0; i < p->h_list.size; i ++){
-		if(p->h_list.handlers[i]->type == PROCESS_INSTRUCTION){
+	for (i = 0; i < p->h_list.size; i++) {
+		if (p->h_list.handlers[i]->type == PROCESS_INSTRUCTION) {
 			p->h_list.handlers[i]->func.process_instruction_handler(name, data);
 		}
 	}
@@ -173,8 +195,9 @@ void pi_caller(SAX_parser *p, char * name, char * data){
 
 int reg_error_handler(SAX_parser *p, void event_handler(int errnum)) {
 	if (p->h_list.size == p->h_list.cap) {
-		p->h_list.cap  = (p->h_list.cap * 3) / 2;
-		p->h_list.handlers = realloc(p->h_list.handlers, sizeof(handler) * p->h_list.size);
+		p->h_list.cap = (p->h_list.cap * 3) / 2;
+		p->h_list.handlers = realloc(p->h_list.handlers, sizeof(handler)
+				* p->h_list.size);
 	}
 	int s = p->h_list.size;
 	handler *new = malloc(sizeof(handler));
@@ -188,11 +211,11 @@ int reg_error_handler(SAX_parser *p, void event_handler(int errnum)) {
 	return 0;
 }
 
-void error_caller(SAX_parser *p, int errnum){
+void error_caller(SAX_parser *p, int errnum) {
 	int i;
-	for(i = 0; i < p->h_list.size; i ++){
-		if(p->h_list.handlers[i]->type == ERROR){
-			(* p->h_list.handlers[i]->func.error_handler)(errnum);
+	for (i = 0; i < p->h_list.size; i++) {
+		if (p->h_list.handlers[i]->type == ERROR) {
+			(*p->h_list.handlers[i]->func.error_handler)(errnum);
 		}
 	}
 }
