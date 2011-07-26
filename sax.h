@@ -54,6 +54,9 @@ typedef struct {
 
 SAX_parser * SAX_init(FILE * source);
 
+void saxfree(SAX_parser *p);
+void attrfree(attr_array *a);
+
 int reg_characters_handler(SAX_parser *p, void event_handler(char * chars));
 void characters_caller(SAX_parser *p, char *chars);
 

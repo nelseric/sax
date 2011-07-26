@@ -28,8 +28,9 @@ void start_parse(SAX_parser *p) {
 			if (charbuf_i > 0) {
 				char * trimmed = trim(charbuf);
 				if(strlen(trimmed) > 0){
-				characters_caller(p, trim(charbuf));
+				characters_caller(p, trimmed);
 				}
+				free(trimmed);
 				for(int i = 0; i <= charbuf_i; i ++)
 					charbuf[i] = '\0';
 				charbuf_i = 0;
@@ -150,7 +151,11 @@ void start_parse(SAX_parser *p) {
 					}
 				}
 
-				start_element_caller(p, namebuf, parse_attributes(databuf));
+				attr_array * attrs = parse_attributes(databuf);
+
+				start_element_caller(p, namebuf, attrs);
+
+				attrfree(attrs);
 
 				free(databuf);
 				free(namebuf);
@@ -191,12 +196,7 @@ attr_array * parse_attributes(const char * datai) {
 		regmatch_t match[3];
 
 		result = regexec(&attr_r, (char *) (data + offset), 3, match, 0);
-		//		printf("'%s' %s\n", (char*) (data + offset), ATTR_REGEX);
 		if (result != 0) {
-			char * err = calloc(100, sizeof(char));
-			regerror(result, &attr_r, err, 100 * sizeof(char));
-			//			puts(err);
-			free(err);
 			break;
 		} else {
 			char *ms = strndup((char*) (data + offset + match[0].rm_so),

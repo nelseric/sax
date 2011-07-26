@@ -9,9 +9,26 @@ SAX_parser * SAX_init(FILE * source) {
 	p->source = source;
 	p->h_list.size = 0;
 	p->h_list.cap = 10;
-	p->h_list.handlers = malloc(p->h_list.cap * sizeof(handler));
+	p->h_list.handlers = malloc(p->h_list.cap * sizeof(handler *));
 	return p;
 }
+
+void saxfree(SAX_parser *p){
+	for(int i = 0; i < p->h_list.size; i ++){
+		free(p->h_list.handlers[i]);
+	}
+	free(p->h_list.handlers);
+	free(p);
+}
+void attrfree(attr_array *a){
+	for(int i = 0; i < a->size; i++){
+		free(a->attrs[i].name);
+		free(a->attrs[i].value);
+	}
+	free(a->attrs);
+	free(a);
+}
+
 
 int reg_characters_handler(SAX_parser *p, void event_handler(char * chars)) {
 	if (p->h_list.size == p->h_list.cap) {

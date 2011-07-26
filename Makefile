@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-Wall -std=c99 -ggdb -DDEBUG
 LDLIBS=
-LDFLAGS=
+LDFLAGS=-ggdb
 
 SOURCES=ppxml.c sax.c sax_parser.c
 
@@ -29,7 +29,7 @@ depend: $(SOURCES)
 include .depend
 
 run: all
-	./$(TARGET) 
+	./$(TARGET) < test.xml
 clean:
 	rm $(OBJECTS) $(TARGET) 
 

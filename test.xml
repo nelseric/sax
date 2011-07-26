@@ -1,6 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<RootElement param="value">
-<FirstElement>
-Some Text
-</FirstElement><?some_pi some_attr="some_value"?><SecondElement param3="nothing" param2="something">Pre-Text <Inline>Inlined text</Inline> Post-text.
-</SecondElement></RootElement>
+<?xml version="1.0" encoding="UTF-8"?><RootElement param="value">
+<FirstElement>Some Text
+</FirstElement><?some_pi some_attr="some_value"?><SecondElement param3="nothing" param2="something">More Text <Inline>Inlined text</Inline> Post-text.</SecondElement></RootElement>

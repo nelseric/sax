@@ -6,17 +6,10 @@
 
 int tabs = 0;
 int main(int argc, char **argv) {
+
 	SAX_parser *p;
 
-	char *mode = "r";
-
-	FILE *f = fopen("/home/eric/workspace/sax/test.xml", mode);
-
-	if (f == NULL) {
-		f = stdin;
-	}
-
-	p = SAX_init(f);
+	p = SAX_init(stdin);
 
 	reg_characters_handler(p, chars);
 	reg_start_document_handler(p, begin);
@@ -30,17 +23,17 @@ int main(int argc, char **argv) {
 
 	fclose(p->source);
 
-	free(p);
+	saxfree(p);
 
 	return EXIT_SUCCESS;
 }
 
 void begin() {
-	puts("Begin XML\n");
+	//puts("Begin XML\n");
 }
 
 void end() {
-	puts("\nEnd XML");
+	//puts("\nEnd XML\n");
 }
 
 void chars(char * chars) {
@@ -75,8 +68,8 @@ void error(int errnum) {
 
 // print n number of string s
 void fpns(int n, char * s) {
-	//	char * s = "--";
-	//	fprintf(f, "%2d|", n);
+	//  char * s = "--";
+	//  fprintf(f, "%2d|", n);
 	for (int i = 0; i < n; i++) {
 		printf("%s", s);
 	}
