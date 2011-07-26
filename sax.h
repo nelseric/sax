@@ -2,14 +2,18 @@
 #define __SAX_H__
 #include <stdio.h>
 
+#define SYNTAX_ERROR 2
+#define REGEX_ERROR 4
+#define OTHER_ERROR 1
+
 typedef struct {
 	char * name;
 	char * value;
 } attribute;
 
 typedef struct {
-	int size;
-	int cap;
+	size_t size;
+	size_t cap;
 	attribute *attrs;
 } attr_array;
 
@@ -39,8 +43,8 @@ typedef struct {
 
 typedef struct {
 	handler **handlers;
-	int cap;
-	int size;
+	size_t cap;
+	size_t size;
 } handler_list;
 
 typedef struct {
@@ -49,8 +53,6 @@ typedef struct {
 } SAX_parser;
 
 SAX_parser * SAX_init(FILE * source);
-
-void start_parse(SAX_parser *p);
 
 int reg_characters_handler(SAX_parser *p, void event_handler(char * chars));
 void characters_caller(SAX_parser *p, char *chars);

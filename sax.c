@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 #include "sax.h"
 
 SAX_parser * SAX_init(FILE * source) {
@@ -8,27 +9,8 @@ SAX_parser * SAX_init(FILE * source) {
 	p->source = source;
 	p->h_list.size = 0;
 	p->h_list.cap = 10;
-	p->h_list.handlers = malloc(p->h_list.size * sizeof(handler));
+	p->h_list.handlers = malloc(p->h_list.cap * sizeof(handler));
 	return p;
-}
-
-void start_parse(SAX_parser *p) {
-	char cur = fgetc(p->source);
-	start_document_caller(p);
-	while (cur != EOF) {
-		if( cur == '<'){
-			cur = fgetc(p->source);
-			if(cur == '?'){
-				// process instruction
-			} else if(cur == '/'){
-				//end tag
-			} else {
-				//open tag
-			}
-		}
-		cur = fgetc(p->source);
-	}
-	end_document_caller(p);
 }
 
 int reg_characters_handler(SAX_parser *p, void event_handler(char * chars)) {

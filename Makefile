@@ -1,9 +1,9 @@
 CC=gcc
-CFLAGS=-Wall -ggdb -std=c99
-LDLIBS=-lreadline
+CFLAGS=-Wall -std=c99 -ggdb -DDEBUG
+LDLIBS=
 LDFLAGS=
 
-SOURCES=ppxml.c sax.c
+SOURCES=ppxml.c sax.c sax_parser.c
 
 OBJECTS=$(SOURCES:.c=.o)
 
@@ -20,7 +20,8 @@ $(TARGET): $(OBJECTS)
 %.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-.depend: depend
+.depend: depend 
+
 
 depend: $(SOURCES)
 	rm -f ./.depend
@@ -28,7 +29,7 @@ depend: $(SOURCES)
 include .depend
 
 run: all
-	./$(TARGET) < test.xml
+	./$(TARGET) 
 clean:
 	rm $(OBJECTS) $(TARGET) 
 
